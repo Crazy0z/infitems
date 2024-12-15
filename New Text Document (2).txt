@@ -1,0 +1,278 @@
+
+local args = {
+    [1] = "Abyss Fragment",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Sombra Medal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Quincy Core",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Primal Sea",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+local args = {
+    [1] = "Ado Medal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Ancient Shell",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Angry Ghost",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Arrancar Medal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Broken Heavenly Spear",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Ninetails Energy",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "God Ear Ring",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Ancient Orb",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Blood Tear",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Broken Heavenly Spear",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Calamity Orb",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Chaos Medal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Crimson Cloud Medal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Cursed Doll",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Cursed Orb",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Dark Spirit",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Demon Blood",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Demon Bullet",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Demonic Heart",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Devil Horn",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Evil Fruit",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Flame Fruit",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Freezing Ice",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "God Clock",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Grand Token",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Mystical Crystal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Ninetails Energy",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Peace Medal",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Universal Material",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("CraftItem"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Lightning Amber",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("TokenExchange"):InvokeServer(unpack(args))
+
+
+local args = {
+    [1] = "Void Captain",
+    [2] = 0/0
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Item"):WaitForChild("TokenExchange"):InvokeServer(unpack(args))
