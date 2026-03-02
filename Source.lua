@@ -8146,17 +8146,20 @@ function Starlight:CreateWindow(WindowSettings)
 						NestedSettings.MultipleOptions = NestedSettings.MultipleOptions or false
 						NestedSettings.Special = NestedSettings.Special or 0
 						NestedSettings.Required = NestedSettings.Required or false
+						NestedSettings.Searchable = NestedSettings.Searchable or false -- NEW: Enable search inside dropdown
 
 						local NestedElement = {
-							Values = NestedSettings,
-							Class = "Dropdown",
-							Instances = {},
-							IgnoreConfig = NestedSettings.IgnoreConfig,
-						}
+						Values = NestedSettings,
+						Class = "Dropdown",
+						Instances = {},
+						IgnoreConfig = NestedSettings.IgnoreConfig,
+						FilteredOptions = {}, -- NEW: Store filtered options
+						SearchText = "", -- NEW: Current search text
+					}
 
 						task.spawn(function()
 							local hover = false
-							local height = 175
+							local height = NestedSettings.Searchable and 215 or 175 -- NEW: Taller if searchable
 
 							NestedElement.Instances[1] = Element.Instance.DropdownHolder.Dropdown:Clone()
 							NestedElement.Instances[1].Visible = true
@@ -8176,7 +8179,57 @@ function Starlight:CreateWindow(WindowSettings)
 
 							NestedElement.Instances[2] = Resources.Elements.DropdownPopup:Clone()
 							NestedElement.Instances[2].Parent = StarlightUI.PopupOverlay
-
+							-- NEW: Create search bar if enabled
+							if NestedSettings.Searchable then
+								local searchFrame = Instance.new("Frame")
+								searchFrame.Name = "SearchBar"
+								searchFrame.Size = UDim2.new(1, -4, 0, 30)
+								searchFrame.Position = UDim2.new(0, 2, 0, 2)
+								searchFrame.BackgroundColor3 = Starlight.CurrentTheme.Backgrounds.Dark
+								searchFrame.BackgroundTransparency = 0.5
+								searchFrame.BorderSizePixel = 0
+								
+								local searchCorner = Instance.new("UICorner")
+								searchCorner.CornerRadius = UDim.new(0, 4)
+								searchCorner.Parent = searchFrame
+								
+								local searchIcon = Instance.new("ImageLabel")
+								searchIcon.Name = "Icon"
+								searchIcon.Size = UDim2.new(0, 20, 0, 20)
+								searchIcon.Position = UDim2.new(0, 5, 0.5, -10)
+								searchIcon.BackgroundTransparency = 1
+								searchIcon.Image = "rbxassetid://92421933997743" -- Search icon
+								searchIcon.ImageColor3 = Starlight.CurrentTheme.Foregrounds.Medium
+								searchIcon.Parent = searchFrame
+								
+								local searchBox = Instance.new("TextBox")
+								searchBox.Name = "Input"
+								searchBox.Size = UDim2.new(1, -30, 1, 0)
+								searchBox.Position = UDim2.new(0, 30, 0, 0)
+								searchBox.BackgroundTransparency = 1
+								searchBox.Text = ""
+								searchBox.PlaceholderText = "Search options..."
+								searchBox.PlaceholderColor3 = Starlight.CurrentTheme.Foregrounds.Medium
+								searchBox.TextColor3 = Starlight.CurrentTheme.Foregrounds.Light
+								searchBox.TextXAlignment = Enum.TextXAlignment.Left
+								searchBox.FontFace = Font.fromId(12187365364, Enum.FontWeight.Regular)
+								searchBox.TextSize = 14
+								searchBox.ClearTextOnFocus = false
+								searchBox.Parent = searchFrame
+								
+								local searchStroke = Instance.new("UIStroke")
+								searchStroke.Color = Starlight.CurrentTheme.Foregrounds.Dark
+								searchStroke.Transparency = 0.5
+								searchStroke.Parent = searchFrame
+								
+								NestedElement.Instances[2].SearchBar = searchFrame
+								
+								-- Update list when search text changes
+								searchBox:GetPropertyChangedSignal("Text"):Connect(function()
+									NestedElement.SearchText = searchBox.Text:lower()
+									NestedElement:Refresh()
+								end)
+							end
 							NestedElement.Instances[1].Name = "DROPDOWN_" .. NestedIndex
 							NestedElement.Instances[2].Name = "DROPDOWN_" .. NestedIndex
 
@@ -8250,53 +8303,106 @@ function Starlight:CreateWindow(WindowSettings)
 								NestedElement:truncate()
 							end)
 
-							NestedElement.Instances[1].Interact.MouseButton1Click:Connect(function()
-								if NestedElement.Instances[2].Visible then
-									close()
-								else
-									NestedElement.Instances[2].Visible = true
-									height = NestedElement.Instances[2].List.AbsoluteCanvasSize.Y >= 175 and 175
-										or NestedElement.Instances[2].List.AbsoluteCanvasSize.Y
-									updPos()
-									NestedElement.Instances[2].List.Size = UDim2.new(1, 0, 0, 0)
-									NestedElement.Instances[2].List.ScrollBarImageTransparency = 1
-									Tween(
-										NestedElement.Instances[2],
-										{ Size = UDim2.fromOffset(NestedElement.Instances[2].Size.X.Offset, height) }
-									)
-									Tween(
-										NestedElement.Instances[2].List,
-										{ Size = UDim2.new(1, 0, 0, height) },
-										function()
-											NestedElement.Instances[2].List.ScrollBarImageTransparency = 0
-										end
-									)
-									if acrylicFlag then
-										AcrylicObject.Model.Transparency = 0.98
-									end
-									local connection
-									connection = UserInputService.InputBegan:Connect(function(i)
-										if i.UserInputType ~= Enum.UserInputType.MouseButton1 then
-											return
-										end
-										local p, pos, size =
-											i.Position,
-											NestedElement.Instances[2].AbsolutePosition,
-											NestedElement.Instances[2].AbsoluteSize
-										if
-											not (
-												p.X >= pos.X
-													and p.X <= pos.X + size.X
-													and p.Y >= pos.Y
-													and p.Y <= pos.Y + size.Y
-											) and not hover
-										then
-											close()
-											connection:Disconnect()
-										end
-									end)
-								end
-							end)
+-- NEW: Improved touch support for mobile
+local touchTimer = 0
+local touchThreshold = 0.3
+
+local function handleTouch(input)
+    if input.UserInputType == Enum.UserInputType.Touch then
+        touchTimer = tick()
+        local connection
+        connection = input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                if tick() - touchTimer < touchThreshold then
+                    -- Quick tap, toggle dropdown
+                    if NestedElement.Instances[2].Visible then
+                        close()
+                    else
+                        NestedElement.Instances[2].Visible = true
+                        height = NestedElement.Instances[2].List.AbsoluteCanvasSize.Y >= (NestedSettings.Searchable and 215 or 175) 
+                            and (NestedSettings.Searchable and 215 or 175) 
+                            or NestedElement.Instances[2].List.AbsoluteCanvasSize.Y
+                        updPos()
+                        NestedElement.Instances[2].List.Size = UDim2.new(1, 0, 0, 0)
+                        NestedElement.Instances[2].List.ScrollBarImageTransparency = 1
+                        Tween(
+                            NestedElement.Instances[2],
+                            { Size = UDim2.fromOffset(NestedElement.Instances[2].Size.X.Offset, height) }
+                        )
+                        Tween(
+                            NestedElement.Instances[2].List,
+                            { Size = UDim2.new(1, 0, 0, height) },
+                            function()
+                                NestedElement.Instances[2].List.ScrollBarImageTransparency = 0
+                            end
+                        )
+                        if acrylicFlag then
+                            AcrylicObject.Model.Transparency = 0.98
+                        end
+                    end
+                end
+                connection:Disconnect()
+            end
+        end)
+    end
+end
+
+NestedElement.Instances[1].Interact.InputBegan:Connect(handleTouch)
+NestedElement.Instances[1].Interact.MouseButton1Click:Connect(function()
+    if NestedElement.Instances[2].Visible then
+        close()
+    else
+        NestedElement.Instances[2].Visible = true
+        height = NestedElement.Instances[2].List.AbsoluteCanvasSize.Y >= (NestedSettings.Searchable and 215 or 175) 
+            and (NestedSettings.Searchable and 215 or 175) 
+            or NestedElement.Instances[2].List.AbsoluteCanvasSize.Y
+        updPos()
+        NestedElement.Instances[2].List.Size = UDim2.new(1, 0, 0, 0)
+        NestedElement.Instances[2].List.ScrollBarImageTransparency = 1
+        Tween(
+            NestedElement.Instances[2],
+            { Size = UDim2.fromOffset(NestedElement.Instances[2].Size.X.Offset, height) }
+        )
+        Tween(
+            NestedElement.Instances[2].List,
+            { Size = UDim2.new(1, 0, 0, height) },
+            function()
+                NestedElement.Instances[2].List.ScrollBarImageTransparency = 0
+            end
+        )
+        if acrylicFlag then
+            AcrylicObject.Model.Transparency = 0.98
+        end
+        
+        -- Focus search bar if exists
+        if NestedSettings.Searchable and NestedElement.Instances[2].SearchBar then
+            task.wait(0.1)
+            NestedElement.Instances[2].SearchBar.Input:CaptureFocus()
+        end
+        
+        local connection
+        connection = UserInputService.InputBegan:Connect(function(i)
+            if i.UserInputType ~= Enum.UserInputType.MouseButton1 and i.UserInputType ~= Enum.UserInputType.Touch then
+                return
+            end
+            local p, pos, size =
+                i.Position,
+                NestedElement.Instances[2].AbsolutePosition,
+                NestedElement.Instances[2].AbsoluteSize
+            if
+                not (
+                    p.X >= pos.X
+                        and p.X <= pos.X + size.X
+                        and p.Y >= pos.Y
+                        and p.Y <= pos.Y + size.Y
+                ) and not hover
+            then
+                close()
+                connection:Disconnect()
+            end
+        end)
+    end
+end)
 
 							local function hover()
 								Tween(
@@ -8596,6 +8702,35 @@ function Starlight:CreateWindow(WindowSettings)
 								end)
 							end
 
+							-- Theme bindings for search bar
+							if NestedSettings.Searchable then
+								ThemeMethods.bindTheme(
+									NestedElement.Instances[2].SearchBar,
+									"BackgroundColor3",
+									"Backgrounds.Dark"
+								)
+								ThemeMethods.bindTheme(
+									NestedElement.Instances[2].SearchBar.UIStroke,
+									"Color",
+									"Foregrounds.Dark"
+								)
+								ThemeMethods.bindTheme(
+									NestedElement.Instances[2].SearchBar.Icon,
+									"ImageColor3",
+									"Foregrounds.Medium"
+								)
+								ThemeMethods.bindTheme(
+									NestedElement.Instances[2].SearchBar.Input,
+									"TextColor3",
+									"Foregrounds.Light"
+								)
+								ThemeMethods.bindTheme(
+									NestedElement.Instances[2].SearchBar.Input,
+									"PlaceholderColor3",
+									"Foregrounds.Medium"
+								)
+							end
+
 							ThemeMethods.bindTheme(
 								NestedElement.Instances[2],
 								"BackgroundColor3",
@@ -8629,7 +8764,6 @@ function Starlight:CreateWindow(WindowSettings)
 								"PlaceholderColor3",
 								"Foregrounds.Medium"
 							)
-
 							function NestedElement:Destroy()
 								NestedElement.Instances[1]:Destroy()
 								NestedElement.Instances[2]:Destroy()
