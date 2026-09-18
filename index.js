@@ -39,7 +39,7 @@ const BOT_SETUP = {
 
   servers: [
     {
-      id: "",                       // Your Discord server ID
+      id: "1034406066282303489",                       // Your Discord server ID
       name: "ownd",
       prefix: "$",
       staffRoleIds: [],              // Example: ["123456789012345678"]
